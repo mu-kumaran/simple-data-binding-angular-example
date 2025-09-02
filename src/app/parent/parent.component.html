@@ -1,0 +1,9 @@
+
+<h2>Parent component!!!</h2>
+<p>msg from child: {{msgFromChild}}</p>
+
+<app-child [message]="messagefromparent" (informParent)="receiveMsg($event)"></app-child>
+
+<p><strong>Combined message from parent and child : </strong>{{combinedMessage}}</p>
+
+

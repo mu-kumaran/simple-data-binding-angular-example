@@ -1,0 +1,171 @@
+Angular databinding
+-------------------
+Angular data binding just means connecting your TypeScript (component class) data with your HTML template (view) so that when data changes, UI updates automatically (and vice versa).
+
+--------------------------------------------------------------------------------------------------
+
+1. Interpolation (One-way binding → TS → HTML) - {{}}
+
+👉 Used when you just want to display data from your component in the template.
+
+// app.component.ts
+export class AppComponent {
+  title = "Hello Angular!";
+}
+
+<!-- app.component.html -->
+<h1>{{ title }}</h1>
+
+
+✅ Output: Hello Angular!
+(If title changes in TS, it auto-updates in HTML.)
+
+---------------------------------------------------------------
+
+2. Property Binding (One-way binding → TS → HTML attribute) - []
+
+👉 Used to set properties/attributes of HTML elements or Angular components.
+
+// app.component.ts
+export class AppComponent {
+  imageUrl = "https://angular.io/assets/images/logos/angular/angular.png";
+}
+
+<!-- app.component.html -->
+<img [src]="imageUrl" alt="Angular logo" />
+
+
+✅ Here [src] takes value from imageUrl.
+-----------------------------------------------------------------------
+
+3. Event Binding (One-way binding → HTML → TS)
+
+👉 Used when user triggers an event (click, input, change, etc.) and you want to call a method in your component.
+
+// app.component.ts
+export class AppComponent {
+  count = 0;
+
+  increase() {
+    this.count++;
+  }
+}
+
+<!-- app.component.html -->
+<button (click)="increase()">Click Me</button>
+<p>Clicked {{ count }} times</p>
+
+
+✅ Clicking button calls increase() → updates count → UI auto-updates.
+---------------------------------------------------------------------------------------------------
+
+4. Two-way Binding (TS ↔ HTML both ways)
+
+👉 Used when you want to sync data both ways (form inputs, user typing, etc.).
+Requires FormsModule.
+
+// app.component.ts
+export class AppComponent {
+  name = "Manoj";
+}
+
+<!-- app.component.html -->
+<input [(ngModel)]="name" placeholder="Enter name" />
+<p>Hello, {{ name }}!</p>
+
+
+✅ Typing in input updates name in TS, and TS updates the template instantly.
+----------------------------------------------------------------------------------------------------
+
+Using get() method
+
+Getter methods are used when you want computed / read-only values.
+
+<!-- app.component.html -->
+<input [(ngModel)]="firstName" placeholder="First Name">
+<input [(ngModel)]="lastName" placeholder="Last Name">
+<p>Full Name: {{ fullName }}</p>
+  
+// app.component.ts
+export class AppComponent {
+firstName = "Manoj";
+lastName = "Kumar";
+
+// getter method
+get fullName(): string {
+  return this.firstName + " " + this.lastName;
+}
+}
+
+✅ Typing updates instantly.
+Getter recalculates fullName automatically.
+---------------------------------------------------------------------------------------------------
+🔹 Rule of Thumb
+
+@Input() = only works on a child component → because it means “I’m expecting data from my parent.”
+
+@Output() = also only works on a child component → because it means “I’ll send events/data to my parent.”
+Parent components don’t have @Input or @Output.
+They only provide values (for child’s @Input) or listen to events (for child’s @Output).
+
+🔹 Example to Visualize
+Child
+// child.component.ts
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+
+@Component({
+  selector: 'app-child',
+  template: `
+    <p>Child got: {{ message }}</p>
+    <button (click)="notifyParent()">Notify Parent</button>
+  `
+})
+export class ChildComponent {
+  @Input() message!: string;  // parent -> child
+  @Output() notify = new EventEmitter<string>();  // child -> parent
+
+  notifyParent() {
+    this.notify.emit("Child says Hello 👋");
+  }
+}
+
+Parent
+// parent.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-parent',
+  template: `
+    <h2>Parent Component</h2>
+    <app-child [message]="parentMessage" 
+               (notify)="onChildNotify($event)">
+    </app-child>
+    <p>Response from Child: {{ childResponse }}</p>
+  `
+})
+export class ParentComponent {
+  parentMessage = "Hello from Parent 👨‍👩‍👦";
+  childResponse = "";
+
+  onChildNotify(msg: string) {
+    this.childResponse = msg;
+  }
+}
+
+🔹 What’s Happening
+
+Child has @Input and @Output.
+
+Parent uses them like this:
+
+[message]="parentMessage" → supplies data to child.
+
+(notify)="onChildNotify($event)" → listens for events from child.
+
+So Parent does not have @Input/@Output, but it interacts with them.
+
+✅ Conclusion
+
+👉 Only Child declares @Input and @Output.
+👉 Parent never declares them, but consumes/uses them.
+--------------------------------------------------------------------------------------------------

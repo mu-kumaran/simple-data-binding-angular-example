@@ -1,0 +1,21 @@
+import { Component } from '@angular/core';
+import { ChildComponent } from "../child/child.component";
+
+@Component({
+  selector: 'app-parent',
+  imports: [ChildComponent],
+  templateUrl: './parent.component.html',
+  styleUrl: './parent.component.css'
+})
+export class ParentComponent {
+  messagefromparent = "Hello Child!!! How are you???"
+  msgFromChild = ""
+
+  receiveMsg(msg:string){
+    this.msgFromChild = msg;
+  }
+
+  get combinedMessage():string {
+      return this.messagefromparent+"|"+this.msgFromChild;
+  }
+}
