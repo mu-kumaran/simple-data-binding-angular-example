@@ -1,0 +1,9 @@
+<h2>Task lists:</h2>
+<p>Select the tasks below:</p>
+<ul>
+    @for (task of taskLists; track task.id) {
+        <li>
+            <button (click)="sendTask(task)">{{task.title}}</button>
+        </li>
+    }
+</ul>

@@ -1,0 +1,15 @@
+<h2>User List</h2>
+<p>Select the users below:</p>
+<ul>
+    <li *ngFor="let u of userList">
+        <button (click)="sendUser(u)">{{u}}</button>
+    </li>
+</ul>
+
+<!-- <ul>
+    @for(u of userList; track u){
+        <li>
+            <button (click)="sendUser(u)">{{u}}</button>
+        </li>
+    } 
+</ul> -->

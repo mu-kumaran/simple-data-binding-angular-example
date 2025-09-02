@@ -1,0 +1,9 @@
+<h2>Task Details:</h2>
+@if (taskInput) {
+    <p><strong>ID:</strong> {{taskInput.id}}</p>
+    <p><strong>Title:</strong> {{taskInput.title}}</p>
+    <p><strong>Description:</strong> {{taskInput.description}}</p>
+}
+@else {
+    <p>Task not yet selected!!!</p>
+}

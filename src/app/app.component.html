@@ -22,3 +22,12 @@ Enter your title here:
 Name plus title: {{nameplustitle}}
 
 <app-parent></app-parent>
+
+<!-- user list and user detail -->
+<p>Total number of users (getter method): {{totalusers}}</p>
+<app-user-list (users)="receiveUser($event)"></app-user-list>
+<app-user-detail [userDetail]="userSelected"></app-user-detail>
+
+<!-- task list and task detail -->
+ <app-task-list (tasks)="receiveTasks($event)"></app-task-list>
+ <app-task-details [taskInput]="taskSelected"></app-task-details>
