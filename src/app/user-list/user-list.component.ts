@@ -14,4 +14,8 @@ export class UserListComponent {
     sendUser(user:string){
       this.users.emit(user)
     }
+
+    get getTotalUserList():number{
+      return this.userList.length;
+    }
 }

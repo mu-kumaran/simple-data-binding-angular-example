@@ -9,7 +9,7 @@ import { ChildComponent } from "../child/child.component";
   styleUrl: './parent.component.css'
 })
 export class ParentComponent {
-  messagefromparent = "Hello Child!!! How are you???"
+  msgToChild = "Hello My Child!!! How are you???"
   msgFromChild = ""
 
   receiveMsg(msg:string){
@@ -17,6 +17,6 @@ export class ParentComponent {
   }
 
   get combinedMessage():string {
-      return this.messagefromparent+"|"+this.msgFromChild;
+      return this.msgToChild+"|"+this.msgFromChild;
   }
 }

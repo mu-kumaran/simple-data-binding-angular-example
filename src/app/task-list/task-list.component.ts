@@ -18,4 +18,8 @@ export class TaskListComponent {
   sendTask(task: any){
     return this.tasks.emit(task)
   }
+
+  get getTotalTaskLists():number{
+    return this.taskLists.length
+  }
 }

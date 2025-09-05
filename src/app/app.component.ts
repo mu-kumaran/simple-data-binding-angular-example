@@ -45,15 +45,11 @@ export class AppComponent {
     this.userSelected = user;
   }
 
-  allUsers = ["Alice","Bob","Marley"]
-
-  get totalusers():number{
-    return this.allUsers.length
-  }
-
   // Task-list and Task-detail components
+  // replying for @Input and @Output components from task-list and task-detail
   taskSelected: any;
   receiveTasks(task: any){
     this.taskSelected = task
   }
+
 }

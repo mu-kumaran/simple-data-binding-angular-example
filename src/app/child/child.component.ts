@@ -8,10 +8,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './child.component.css'
 })
 export class ChildComponent {
+  @Output() sendMessage = new EventEmitter<string>();  //Send message to parent
   @Input() message! : string; // receives input from parent
-  @Output() informParent = new EventEmitter<string>();
+  
 
-  sendMessage(){
-    this.informParent.emit("Hello parent!!! I am fine...")
+  senderBox(){
+    this.sendMessage.emit("Hello parent!!! I am Fine...")
   }
 }
